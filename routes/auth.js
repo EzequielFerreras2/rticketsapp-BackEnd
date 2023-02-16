@@ -9,6 +9,7 @@ const { registerUser, login, reNewToken } = require('../Controllers/auth');
 const { fieldsValidator } = require('../middlewares/fieldsValidator');
 const {jwtValidation} = require('../middlewares/jwt-validator')
 
+
 //rutas rutas
 router.post(
 '/register',
