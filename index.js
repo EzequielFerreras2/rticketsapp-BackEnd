@@ -31,6 +31,9 @@ app.use('/api/cases/subcategory',require('./routes/CasesCategories/SubCategory')
 app.use('/api/cases',require('./routes/Cases/Cases'));
 
 
+app.get('*',(req,res)=>{
+    res.sendFile(__dirname+'/public/index.html');
+});
 
 //escuchar preticiones
 let port= process.env.PORT || 4001;
