@@ -1,8 +1,10 @@
 const express = require('express');
 
-const mailjet = require('node-mailjet').connect(process.env.MJ_APIKEY_PUBLIC,process.env.MJ_APIKEY_PRIVATE)
+const mailjet = require('node-mailjet')
 
 const sendCreateCasesEmail =()=>{
+
+    mailjet.connect(process.env.MJ_APIKEY_PUBLIC,process.env.MJ_APIKEY_PRIVATE)
 
     const request = mailjet.post('send', { version: 'v3.1' }).request({
         Messages: [
