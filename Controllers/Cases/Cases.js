@@ -53,12 +53,7 @@ const createCases =async(req, res = express.response)=>{
     const casesCategory = req.params.casescategory
     const dates = Date.now();
     const dateNow = moment(dates).format("L");
- 
-   
-
     const cases = new Cases(req.body);
-
-    
     try 
     {               
                     cases.openCaseUser= openUser;
@@ -70,9 +65,15 @@ const createCases =async(req, res = express.response)=>{
                     cases.status ="Abierto"
                
                     const caseSave = await cases.save();
+
+                    const findCaseSaved = await Cases.findById(caseSave.id).populate({ path: 'openCaseUser', select: 'name , email , company , departament' })
+                    .populate({ path: 'casesCategory', select: 'title , category , subcategory , priority , description ' })
+                    .populate({ path: 'casesCategory.category', select: 'id , category ' }).sort( { openDate: -1 } )
+                    .populate({ path: 'closeCaseUser', select: 'name , email , company , departament' });
+
                     return res.status(201).json({
                         ok:true,
-                        Case: caseSave
+                        Case: findCaseSaved
                     });  
     } 
     catch (error) 
@@ -141,10 +142,14 @@ const updateAdminCases =async(req, res = express.response)=>{
             
             const updatedCases = await Cases.findByIdAndUpdate(caseId,newCases,{new:true});
             
+            const findCaseUpdated = await Cases.findById(updatedCases.id).populate({ path: 'openCaseUser', select: 'name , email , company , departament' })
+                    .populate({ path: 'casesCategory', select: 'title , category , subcategory , priority , description ' })
+                    .populate({ path: 'casesCategory.category', select: 'id , category ' }).sort( { openDate: -1 } )
+                    .populate({ path: 'closeCaseUser', select: 'name , email , company , departament' });
         
             return res.status(200).json({
                 ok:true,
-                updatedCases:updatedCases 
+                updatedCases:findCaseUpdated 
         });
 
         }
@@ -167,7 +172,6 @@ const deleteCases =async(req, res = express.response)=>{
    
     try 
     {
-      
             const cases = await Cases.findById(CasesId)
             if(!cases)
             {
