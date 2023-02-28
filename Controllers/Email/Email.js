@@ -1,11 +1,19 @@
 const express = require('express');
 
-const mailjet = require('node-mailjet')
+const Mailjet = require('node-mailjet')
+
+const mailjet = Mailjet.apiConnect(
+  process.env.MJ_APIKEY_PUBLIC,
+  process.env.MJ_APIKEY_PRIVATE,
+  {
+    config: {},
+    options: {}
+  } 
+  )
 
 const sendCreateCasesEmail =()=>{
 
-    mailjet.connect(process.env.MJ_APIKEY_PUBLIC,process.env.MJ_APIKEY_PRIVATE)
-
+  console.log(mailjet)
     const request = mailjet.post('send', { version: 'v3.1' }).request({
         Messages: [
           {
@@ -16,10 +24,10 @@ const sendCreateCasesEmail =()=>{
             To: [
               {
                 Email: 'ezequielferreras2@gmail.com',
-                Name: 'You',
+                Name: 'ezequielferreras2@gmail.com',
               },
             ],
-            Subject: 'My first Mailjet Email!',
+            Subject: 'Caso #: 112694654351.10',
             TextPart: 'Greetings from Mailjet!',
             HTMLPart:
               '<h3>Dear passenger 1, welcome to <a href="https://www.mailjet.com/">Mailjet</a>!</h3><br />May the delivery force be with you!',
@@ -28,9 +36,11 @@ const sendCreateCasesEmail =()=>{
       })
       request
         .then(result => {
+          console.log("result.body")
           console.log(result.body)
         })
         .catch(err => {
+          console.log("err.statusCode")
           console.log(err.statusCode)
         })
 
@@ -41,16 +51,16 @@ const sendCloseCasesEmail =()=>{
         Messages: [
           {
             From: {
-              Email: '$SENDER_EMAIL',
-              Name: 'Me',
+              Email: 'rticketspost@gmail.com',
+              Name: 'rticketspost',
             },
             To: [
               {
-                Email: '$RECIPIENT_EMAIL',
-                Name: 'You',
+                Email: 'ezequielferreras078@outlook.com',
+                Name: 'User',
               },
             ],
-            Subject: 'My first Mailjet Email!',
+            Subject: 'Caso #: 112694654351.10',
             TextPart: 'Greetings from Mailjet!',
             HTMLPart:
               '<h3>Dear passenger 1, welcome to <a href="https://www.mailjet.com/">Mailjet</a>!</h3><br />May the delivery force be with you!',
