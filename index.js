@@ -29,6 +29,7 @@ app.use('/api/cases/casescategory',require('./routes/CasesCategories/CasesCatego
 app.use('/api/cases/category',require('./routes/CasesCategories/CategoryCases'));
 app.use('/api/cases/subcategory',require('./routes/CasesCategories/SubCategory'));
 app.use('/api/cases',require('./routes/Cases/Cases'));
+app.use('/api/email',require('./routes/email/Email'));
 
 
 app.get('*',(req,res)=>{
