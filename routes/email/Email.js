@@ -3,13 +3,13 @@ const router =Router();
 const { check} = require('express-validator')
 const { fieldsValidator } = require('../../middlewares/fieldsValidator');
 const{jwtValidation} = require('../../middlewares/jwt-validator')
-const {sendCloseCasesEmail,sendCreateCasesEmail} = require('../../Controllers/Email/Email')
+const {sendCloseCasesEmail,sendCreateCasesEmail,sendCreateCasesAdminEmail} = require('../../Controllers/Email/Email')
 
 router.use(jwtValidation)
 
+router.post('/createcasesadminemail',sendCreateCasesEmail);
 router.post('/createcasesemail',sendCreateCasesEmail);
-
 router.post('/closecasesemail',sendCloseCasesEmail);
 
-
+sendCreateCasesAdminEmail
 module.exports = router;

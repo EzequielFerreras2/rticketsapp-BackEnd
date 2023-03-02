@@ -9,7 +9,50 @@ const mailjet = Mailjet.apiConnect(
     config: {},
     options: {}
   } 
-  )
+  );
+
+  const sendCreateCasesAdminEmail =(req, res = express.response)=>{
+
+    const {openCaseUser,id,status,casesCategory,openDate,details} = req.body;
+    const minCasesID= id?.slice(-7);
+  
+    const request = mailjet
+    .post("send", {'version': 'v3.1'})
+    .request({
+      "Messages":[
+        {
+          "From": {
+            "Email": `${process.env.MASTER_EMAIL}`,
+            "Name": "RticketsPost"
+          },
+          "To": [
+            {
+              "Email": `${openCaseUser.email}`,
+              "Name": `${openCaseUser.name}`
+            }
+          ],
+          "TemplateID": 4625387,
+          "TemplateLanguage": true,
+          "Subject": `${status}`,
+          "Variables": {
+        "caseId": `${minCasesID}`,
+        "status": `${status}`,
+        "title": `${casesCategory?.title}`,
+        "openDate": `${openDate}`,
+        "details": `${details}`
+      }
+        }
+      ]
+    })
+    request
+    .then(result => {
+      console.log(result.body)
+    })
+    .catch(err => {
+      console.log(err.statusCode)
+    })
+  
+  };
 
 const sendCreateCasesEmail =(req, res = express.response)=>{
 
@@ -107,4 +150,4 @@ const sendCloseCasesEmail =(req, res = express.response)=>{
     
 }
 
-module.exports ={sendCreateCasesEmail,sendCloseCasesEmail};
+module.exports ={sendCreateCasesEmail,sendCloseCasesEmail,sendCreateCasesAdminEmail};
