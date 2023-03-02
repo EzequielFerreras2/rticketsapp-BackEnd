@@ -7,9 +7,9 @@ const {sendCloseCasesEmail,sendCreateCasesEmail,sendCreateCasesAdminEmail} = req
 
 router.use(jwtValidation)
 
-router.post('/createcasesadminemail',sendCreateCasesEmail);
+router.post('/createcasesadminemail',sendCreateCasesAdminEmail);
 router.post('/createcasesemail',sendCreateCasesEmail);
 router.post('/closecasesemail',sendCloseCasesEmail);
 
-sendCreateCasesAdminEmail
+
 module.exports = router;

@@ -16,37 +16,45 @@ const mailjet = Mailjet.apiConnect(
     const {openCaseUser,id,status,casesCategory,openDate,details} = req.body;
     const minCasesID= id?.slice(-7);
   
+    console.log("adminEmail")
+
     const request = mailjet
-    .post("send", {'version': 'v3.1'})
-    .request({
-      "Messages":[
-        {
-          "From": {
-            "Email": `${process.env.MASTER_EMAIL}`,
-            "Name": "RticketsPost"
-          },
-          "To": [
-            {
-              "Email": `${openCaseUser.email}`,
-              "Name": `${openCaseUser.name}`
-            }
-          ],
-          "TemplateID": 4625387,
-          "TemplateLanguage": true,
-          "Subject": `${status}`,
-          "Variables": {
-        "caseId": `${minCasesID}`,
-        "status": `${status}`,
-        "title": `${casesCategory?.title}`,
-        "openDate": `${openDate}`,
-        "details": `${details}`
-      }
-        }
-      ]
-    })
+	.post("send", {'version': 'v3.1'})
+	.request({
+		"Messages":[
+      {
+        "From": {
+          "Email": `${process.env.MASTER_EMAIL}`,
+          "Name": "RticketsPost"
+        },
+        "To": [
+          {
+            "Email": `ezequielferreras2@gmail.com`,
+            "Name": `Ezequiel Ferreras`
+          }
+				],
+				"TemplateID": 4625927,
+				"TemplateLanguage": true,
+				"Subject": `AdminPost: ${status}`,
+				"Variables": {
+      "caseId": `${minCasesID}`,
+      "status": `${status}`,
+      "title": `${casesCategory?.title}`,
+      "subCategory": `${casesCategory?.subcategory}`,
+      "category": `${casesCategory?.category}`,
+      "userName": `${openCaseUser?.name}`,
+      "userEmail": `${openCaseUser?.email}`,
+      "userDepartament": `${openCaseUser?.departament}`,
+      "openDate": `${openDate}`,
+      "details": `${details}`
+    }
+			}
+		]
+	})
     request
     .then(result => {
       console.log(result.body)
+      console.log("adminEmail")
     })
     .catch(err => {
       console.log(err.statusCode)
