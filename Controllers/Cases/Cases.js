@@ -138,7 +138,7 @@ const updateAdminCases =async(req, res = express.response)=>{
             newCases.closeDate = dateNow;
             newCases.closeCaseUser= uid;
 
-            console.log(newCases);
+            
             
             const updatedCases = await Cases.findByIdAndUpdate(caseId,newCases,{new:true});
             

@@ -13,41 +13,44 @@ const mailjet = Mailjet.apiConnect(
 
 const sendCreateCasesEmail =(req, res = express.response)=>{
 
+  const {openCaseUser,id,status,casesCategory,openDate,details} = req.body;
+  const minCasesID= id?.slice(-7);
 
-    const request = mailjet.post('send', { version: 'v3.1' }).request({
-        Messages: [
+  const request = mailjet
+	.post("send", {'version': 'v3.1'})
+	.request({
+		"Messages":[
+			{
+        "From": {
+          "Email": `${process.env.MASTER_EMAIL}`,
+          "Name": "RticketsPost"
+        },
+        "To": [
           {
-            From: {
-              Email: 'rticketspost@gmail.com',
-              Name: 'RticketsApp',
-            },
-            To: [
-              {
-                Email: 'ezequielferreras2@gmail.com',
-                Name: 'ezequielferreras2@gmail.com',
-              },
-            ],
-            Subject: 'Caso #: 112694654351.10',
-            TextPart: 'Greetings from Mailjet!',
-            HTMLPart:
-              '<h3>Dear passenger 1, welcome to <a href="https://www.mailjet.com/">Mailjet</a>!</h3><br />May the delivery force be with you!',
-          },
+            "Email": `${openCaseUser.email}`,
+            "Name": `${openCaseUser.name}`
+          }
         ],
-      })
-      request
-        .then(result => {
-          return res.status(200).json({
-            ok:true,
-            result:result
-        });
-        })
-        .catch(err => {
-          return res.status(500).json({
-            ok:false,
-            msg: 'Contactar con el administrador',
-            error:err
-        });
-        })
+				"TemplateID": 4625387,
+				"TemplateLanguage": true,
+				"Subject": `${status}`,
+				"Variables": {
+      "caseId": `${minCasesID}`,
+      "status": `${status}`,
+      "title": `${casesCategory?.title}`,
+      "openDate": `${openDate}`,
+      "details": `${details}`
+    }
+			}
+		]
+	})
+  request
+  .then(result => {
+    console.log(result.body)
+  })
+  .catch(err => {
+    console.log(err.statusCode)
+  })
 
 };
 const sendCloseCasesEmail =(req, res = express.response)=>{
