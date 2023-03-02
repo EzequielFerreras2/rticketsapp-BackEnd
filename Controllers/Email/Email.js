@@ -54,41 +54,54 @@ const sendCreateCasesEmail =(req, res = express.response)=>{
 };
 const sendCloseCasesEmail =(req, res = express.response)=>{
 
-  const {openCaseUser,id,status,closeDate,casesCategory,notesSuport} = req.body;
+  const {openCaseUser,id,status,closeDate,casesCategory,notesSuport,openDate,closeCaseUser} = req.body;
   const minCasesID= id?.slice(-7);
-  console.log("openCaseUser.email,id")
-  console.log(openCaseUser.email,id)
   console.log("req.body")
   console.log(req.body)
-  console.log(minCasesID)
 
-    const request = mailjet.post('send', { version: 'v3.1' }).request({
-        Messages: [
+    if(status==="Cerrado Incorrecto" || status==="Cerrado No Resuelto"|| status==="Cerrado Satisfactorio")
+    {
+
+      const request = mailjet
+      .post("send", {'version': 'v3.1'})
+      .request({
+        "Messages":[
           {
-            From: {
-              Email: `${process.env.MASTER_EMAIL}`,
-              Name: 'RticketsPost',
+            "From": {
+              "Email": `${process.env.MASTER_EMAIL}`,
+              "Name": "RticketsPost"
             },
-            To: [
+            "To": [
               {
-                Email: `${openCaseUser.email}`,
-                Name: `${openCaseUser.name}`,
-              },
+                "Email": `${openCaseUser.email}`,
+                "Name": `${openCaseUser.name}`
+              }
             ],
-            Subject: `Caso :${status}`,
-            TextPart: `RticketsApp`,
-            HTMLPart:
-              `<h3>Caso #: ${minCasesID}</h3><br /><p><b>Titulo:</b> ${casesCategory?.title}.</p><br /><p><b>Fecha De Cierre:</b> ${closeDate}.</p><br /><p><b>Notas del Soporte:</b> ${notesSuport}.</p>`,
-          },
-        ],
-      })
+            "TemplateID": 4622141,
+            "TemplateLanguage": true,
+            "Subject": `${status}`,
+            "Variables": {
+          "caseId": `${minCasesID}`,
+          "status": `${status}`,
+          "title": `${casesCategory?.title}`,
+          "openDate": `${openDate}`,
+          "closeDate": `${closeDate}`,
+          "closeCaseUser": `${closeCaseUser?.name}`,
+          "notesSuport": `${notesSuport}`
+        }
+          }
+        ]
+      }) 
       request
-  .then(result => {
-    console.log(result.body)
-  })
-  .catch(err => {
-    console.log(err.statusCode)
-  })
+      .then(result => {
+        console.log(result.body)
+      })
+      .catch(err => {
+        console.log(err.statusCode)
+      })
+
+    };
+    
 
     
 }
