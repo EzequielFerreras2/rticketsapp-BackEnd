@@ -13,8 +13,6 @@ const mailjet = Mailjet.apiConnect(
 
 const sendCreateCasesEmail =(req, res = express.response)=>{
 
-  const {caseId} = req.body;
-  console.log(req.body)
 
     const request = mailjet.post('send', { version: 'v3.1' }).request({
         Messages: [
