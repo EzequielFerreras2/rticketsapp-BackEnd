@@ -55,9 +55,18 @@ const mailjet = Mailjet.apiConnect(
     .then(result => {
       console.log(result.body)
       console.log("adminEmail")
+      return res.status(200).json({
+        ok:true,
+        email:result.body
+      });
+      
     })
     .catch(err => {
       console.log(err.statusCode)
+      return res.status(200).json({
+        ok:false,
+        error:err.statusCode
+      });
     })
   
   };
@@ -96,12 +105,21 @@ const sendCreateCasesEmail =(req, res = express.response)=>{
 		]
 	})
   request
-  .then(result => {
-    console.log(result.body)
-  })
-  .catch(err => {
-    console.log(err.statusCode)
-  })
+    .then(result => {
+      console.log(result.body)
+      return res.status(200).json({
+        ok:true,
+        email:result.body
+      });
+      
+    })
+    .catch(err => {
+      console.log(err.statusCode)
+      return res.status(200).json({
+        ok:false,
+        error:err.statusCode
+      });
+    })
 
 };
 const sendCloseCasesEmail =(req, res = express.response)=>{
@@ -145,14 +163,24 @@ const sendCloseCasesEmail =(req, res = express.response)=>{
         ]
       }) 
       request
-      .then(result => {
-        console.log(result.body)
-      })
-      .catch(err => {
-        console.log(err.statusCode)
-      })
-
+    .then(result => {
+      console.log(result.body)
+      return res.status(200).json({
+        ok:true,
+        email:result.body
+      });
+      
+    })
+    .catch(err => {
+      console.log(err.statusCode)
+      return res.status(200).json({
+        ok:false,
+        error:err.statusCode
+      });
+    })
+    
     };
+
     
 
     
