@@ -12,13 +12,12 @@ const getCasesCategory =async(req, res = express.response)=>{
     });
 };
 
-const getCasesCategoryByid =async(req, res = express.response)=>{
-    const casesCategory = await CasesCategory.find().populate({ path: 'subcategory', select: 'subcategory , category' })
+const getCasesCategoryByid =async(data)=>{
+    const categoryCasesId = data;
+    const casesCategory = await CasesCategory.findById(categoryCasesId).populate({ path: 'subcategory', select: 'subcategory , category' })
     .populate({ path: 'category', select: 'category' });
-    return res.status(200).json({
-        ok:true,
-        CasesCategory: casesCategory
-    });
+    
+    return casesCategory;
 };
 
 const getCasesCategoryBySubCategory =async(req, res = express.response)=>{
@@ -265,4 +264,4 @@ const deleteCasesCategory =async(req, res = express.response)=>{
 
 module.exports ={ getCasesCategory,getCasesCategoryBySubCategory,
     getCasesCategoryByCategory,createCasesCategory,updateCasesCategory,
-    deleteCasesCategory,findCasesCategory};
+    deleteCasesCategory,findCasesCategory,getCasesCategoryByid};
