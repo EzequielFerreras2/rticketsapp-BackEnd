@@ -15,8 +15,6 @@ const mailjet = Mailjet.apiConnect(
 
     const {openCaseUser,id,status,casesCategory,openDate,details} = req.body;
     const minCasesID= id?.slice(-7);
-  
-    console.log("adminEmail")
 
     const request = mailjet
 	.post("send", {'version': 'v3.1'})
@@ -54,7 +52,6 @@ const mailjet = Mailjet.apiConnect(
     request
     .then(result => {
       console.log(result.body)
-      console.log("adminEmail")
       return res.status(200).json({
         ok:true,
         email:result.body
@@ -178,7 +175,7 @@ const sendCloseCasesEmail =(req, res = express.response)=>{
         error:err.statusCode
       });
     })
-    
+
     };
 
     
