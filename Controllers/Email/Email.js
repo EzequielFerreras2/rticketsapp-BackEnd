@@ -15,7 +15,10 @@ const mailjet = Mailjet.apiConnect(
 
     const {openCaseUser,id,status,casesCategory,openDate,details} = req.body;
     const minCasesID= id?.slice(-7);
-    const categoryCases = getCasesCategoryByid( casesCategory._id);
+    var categoryCases ;
+    getCasesCategoryByid( casesCategory._id).then( val =>{
+        categoryCases= val;
+    });
 
     console.log("categoryCases");
     console.log(categoryCases);
