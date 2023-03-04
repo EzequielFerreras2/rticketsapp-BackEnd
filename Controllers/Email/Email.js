@@ -78,7 +78,6 @@ const sendCreateCasesEmail =(req, res = express.response)=>{
 
   const {openCaseUser,id,status,casesCategory,openDate,details} = req.body;
   const minCasesID= id?.slice(-7);
-
   const request = mailjet
 	.post("send", {'version': 'v3.1'})
 	.request({
