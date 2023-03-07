@@ -58,6 +58,11 @@ const {email, password, departament} = req.body
 
 };
 
+const verifyEmail =(req, res = express.response)=>{
+
+
+};
+
 //post
 const login = async(req, res = express.response) =>{
 
@@ -130,4 +135,4 @@ const reNewToken = async(req, res = express.response) =>{
 };
 
 
-module.exports ={ registerUser, login, reNewToken};
+module.exports ={ registerUser, login, verifyEmail, reNewToken};
