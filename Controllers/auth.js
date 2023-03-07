@@ -11,10 +11,6 @@ const {email, password, departament} = req.body
    try {
 
     let user = await User.findOne({email})
-    let pru = await User.find({departament})
-
-
-    console.log(pru);
 
     if (user)
     {
@@ -30,6 +26,7 @@ const {email, password, departament} = req.body
      // encriptar contraseña
      const salt = bcrypt.genSaltSync();
      user.password= bcrypt.hashSync( password , salt);
+     user.status="verifying"
 
      await user.save();
 
