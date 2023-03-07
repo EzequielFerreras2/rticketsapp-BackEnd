@@ -34,6 +34,10 @@ const UserSchema = Schema({
     company:{
         type: String,
         required:true,  
+    },
+    status:{
+        type: String,
+        required:true,  
     }
 
 });
