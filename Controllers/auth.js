@@ -7,11 +7,8 @@ const {generateJWT}= require('../helpers/jwt');
 const registerUser = async(req, res = express.response) =>{
  
 const {email, password, departament} = req.body
-
    try {
-
     let user = await User.findOne({email})
-
     if (user)
     {
        return res.status(400).json({
@@ -27,13 +24,10 @@ const {email, password, departament} = req.body
      const salt = bcrypt.genSaltSync();
      user.password= bcrypt.hashSync( password , salt);
      user.status="verifying"
-
      await user.save();
-
      const token = await generateJWT(user.id,user.name,user.rol,).then((res)=>{
         return res; 
      })
-   
      res.status(201).json({
         ok:true,
         uid: user.id,
@@ -44,18 +38,14 @@ const {email, password, departament} = req.body
         company:user.company,
         token:token
     });
-
     }
    } catch (error) {
-
-    console.log(error)
+    console.log(error) 
     res.status(500).json({
         ok:false,
         msg: 'Pongase en contacto con el administrador'
     });
-
    }
-
 };
 
 const verifyEmail =(req, res = express.response)=>{
