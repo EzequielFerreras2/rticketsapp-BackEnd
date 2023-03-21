@@ -10,7 +10,7 @@ const jwtValidation = (req,res = response,next)=>{
     if(!token){
         return res.status(401).json({
             ok:false,
-            msg:'Secion Finalizada. Favor iniciar secion.'
+            msg:'Sesion Finalizada. Favor iniciar Sesion.'
         });
     }
     else{
