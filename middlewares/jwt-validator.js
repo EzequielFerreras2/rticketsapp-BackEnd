@@ -14,7 +14,6 @@ const jwtValidation = (req,res = response,next)=>{
         });
     }
     else{
-
             try {
                 const payload = verify(token,process.env.SECRET_JWT_SEED);
 
