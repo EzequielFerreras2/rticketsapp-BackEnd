@@ -38,7 +38,7 @@ app.get('*',(req,res)=>{
 
 //escuchar preticiones
 let port= process.env.PORT || 4001;
-app.listen(port, () => console.log(`Aclicacion Corre en el Puerto ${process.env.PORT}!`));
+app.listen(port, () => console.log(`Aclicacion Corre en el Puerto. ${process.env.PORT}!`));
 
 
 
