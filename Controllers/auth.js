@@ -96,19 +96,22 @@ const login = async(req, res = express.response) =>{
             }
             else
             {
-                const token = await generateJWT(user.id,user.name,user.rol).then((res)=>{
-                    return res;
-                });
-                res.status(200).json({
-                    ok:true,
-                    uid: user.id,
-                    name:user.name,
-                    email:user.email,
-                    rol:user.rol,
-                    departament:user.departament,
-                    company:user.company,
-                    token:token
-                });
+                if(user.status ==="Ok")
+                {
+                    const token = await generateJWT(user.id,user.name,user.rol).then((res)=>{
+                        return res;
+                    });
+                    res.status(200).json({
+                        ok:true,
+                        uid: user.id,
+                        name:user.name,
+                        email:user.email,
+                        rol:user.rol,
+                        departament:user.departament,
+                        company:user.company,
+                        token:token
+                    });
+                }
             }
         }   
     } 
