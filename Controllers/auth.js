@@ -23,7 +23,7 @@ const {email, password, departament} = req.body
      // encriptar contraseña
      const salt = bcrypt.genSaltSync();
      user.password= bcrypt.hashSync( password , salt);
-     user.status="verifying"
+     user.status="Verifying"
      await user.save();
      const token = await generateJWT(user.id,user.name,user.rol,).then((res)=>{
         return res; 
@@ -68,55 +68,50 @@ const login = async(req, res = express.response) =>{
 
     if (!user)
     {
-       return res.status(400).json({
-            ok:false,
-            msg: 'El correo ingresado no existe'
+        return res.status(400).json({
+                ok:false,
+                msg: 'El correo ingresado no existe'
         });
     }
-
     const passwordVali = bcrypt.compareSync( password, user.password)
-
     if(! passwordVali){
-
         return res.status(400).json({
             ok:false,
             msg: 'Contraseña Incorrecta'
         });
     }
-
     else{
-
-       if(user.status==="verifying"){
-
-        return res.status(400).json({
-            ok:false,
-            msg: 'Usuario Aun en Verificacion. Favor Contactar Con el Departamento de TI'
-        });
-
-       }
-       else{
-
-        const token = await generateJWT(user.id,user.name,user.rol).then((res)=>{
-            return res;
-         })
-
-        res.status(200).json({
-            ok:true,
-            uid: user.id,
-            name:user.name,
-            email:user.email,
-            rol:user.rol,
-            departament:user.departament,
-            company:user.company,
-            token:token
-        });
-
-       }
-
-        
-    }
- 
-    
+        if(user.status==="Verifying"){
+            return res.status(400).json({
+                ok:false,
+                msg: 'Usuario Aun en Verificacion. Favor Contactar Con el Departamento de TI'
+            });
+        }
+        else{
+            if(user.status==="Disable"){
+                return res.status(400).json({
+                    ok:false,
+                    msg: 'Usuario Deshabilitado. Favor Contactar Con el Departamento de TI'
+                });
+            }
+            else
+            {
+                const token = await generateJWT(user.id,user.name,user.rol).then((res)=>{
+                    return res;
+                });
+                res.status(200).json({
+                    ok:true,
+                    uid: user.id,
+                    name:user.name,
+                    email:user.email,
+                    rol:user.rol,
+                    departament:user.departament,
+                    company:user.company,
+                    token:token
+                });
+            }
+        }   
+    } 
 };
 
 //get
@@ -126,7 +121,7 @@ const reNewToken = async(req, res = express.response) =>{
 
     const token = await generateJWT(uid,name,rol).then((res)=>{
         return res; 
-     })
+    })
 
     res.status(200).json({
         ok:true,
