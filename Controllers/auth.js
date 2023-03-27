@@ -58,7 +58,7 @@ const login = async(req, res = express.response) =>{
 
     const { email, password ,departament} = req.body
     let user = await User.findOne({email})
-
+   
     // let pru = await User.find({departament})
     // console.log('departamento')
     // pru.map(res =>{
@@ -86,6 +86,16 @@ const login = async(req, res = express.response) =>{
 
     else{
 
+       if(user.status==="verifying"){
+
+        return res.status(400).json({
+            ok:false,
+            msg: 'Usuario Aun en Verificacion'
+        });
+
+       }
+       else{
+
         const token = await generateJWT(user.id,user.name,user.rol).then((res)=>{
             return res;
          })
@@ -100,6 +110,10 @@ const login = async(req, res = express.response) =>{
             company:user.company,
             token:token
         });
+
+       }
+
+        
     }
  
     
