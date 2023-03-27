@@ -90,7 +90,7 @@ const login = async(req, res = express.response) =>{
 
         return res.status(400).json({
             ok:false,
-            msg: 'Usuario Aun en Verificacion'
+            msg: 'Usuario Aun en Verificacion. Favor Contactar Con el Departamento de TI'
         });
 
        }
