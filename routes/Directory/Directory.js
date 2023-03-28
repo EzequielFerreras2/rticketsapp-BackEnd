@@ -1,12 +1,12 @@
 const {Router}= require('express');
 const router =Router();
 const{jwtValidation} = require('../../middlewares/jwt-validator');
-const {readEmailsExcelBook,readflotasExcelBook} = require('../../Controllers/Directory/Directory')
+const {readEmailsExcelBook,readflotasExcelBook,readPhonesExcelBook} = require('../../Controllers/Directory/Directory')
 
 router.use(jwtValidation);
 
 router.get('/emails',readEmailsExcelBook);
-// router.get('/phones',getCasesByUserId);
+router.get('/phones',readPhonesExcelBook);
 router.get('/flotas',readflotasExcelBook);
 
 

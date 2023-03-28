@@ -14,7 +14,7 @@ const readEmailsExcelBook = async(req, res = express.response) =>{
     });
 }
 const readPhonesExcelBook = async(req, res = express.response) =>{
-    const workBook = await XLSX.readFile("Controllers/Directory/EmailDiretory.xlsx");
+    const workBook = await XLSX.readFile("Controllers/Directory/Ext.xlsx");
     const workBookSheets =workBook.SheetNames;
     const sheet  = workBookSheets[0];
     const data= await XLSX.utils.sheet_to_json(workBook.Sheets[sheet]);
@@ -40,4 +40,4 @@ const readflotasExcelBook = async(req, res = express.response) =>{
 
 
 
-module.exports ={readEmailsExcelBook,readflotasExcelBook };
+module.exports ={readEmailsExcelBook,readflotasExcelBook,readPhonesExcelBook };
