@@ -11,7 +11,7 @@ const readEmailsExcelBook = async(req, res = express.response) =>{
     return res.status(200).json({
         ok:true,
         workBookSheets: workBookSheets,
-        data:data
+        Emails:data
     });
     } catch (error) {
         return res.status(500).json({
@@ -31,7 +31,7 @@ const readPhonesExcelBook = async(req, res = express.response) =>{
         return res.status(200).json({
             ok:true,
             workBookSheets: workBookSheets,
-            data:data
+            Phones:data
         });  
     } catch (error) {
         return res.status(500).json({
@@ -51,7 +51,7 @@ const readflotasExcelBook = async(req, res = express.response) =>{
     return res.status(200).json({
         ok:true,
         workBookSheets: workBookSheets,
-        data:data
+        Flotas:data
     });
         
     } catch (error) {
