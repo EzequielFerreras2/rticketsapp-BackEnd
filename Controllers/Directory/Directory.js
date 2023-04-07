@@ -19,8 +19,7 @@ const readEmailsExcelBook = async(req, res = express.response) =>{
             msg: 'Contactar con el administrador',
             error:error
         });
-    }
-    
+    } 
 };
 const readPhonesExcelBook = async(req, res = express.response) =>{
     try {
@@ -66,4 +65,4 @@ const readflotasExcelBook = async(req, res = express.response) =>{
 
 
 
-module.exports ={readEmailsExcelBook,readflotasExcelBook,readPhonesExcelBook };
+module.exports ={readEmailsExcelBook,readflotasExcelBook,readPhonesExcelBook};
