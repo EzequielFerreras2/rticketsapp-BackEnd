@@ -31,8 +31,8 @@ const mailjet = Mailjet.apiConnect(
         },
         "To": [
           {
-            "Email": `ezequielferreras2@gmail.com`,
-            "Name": `Ezequiel Ferreras`
+            "Email": `ezequielferreras078@outlook.com`,
+            "Name": `TIGruopApp`
           }
 				],
 				"TemplateID": 4625927,
